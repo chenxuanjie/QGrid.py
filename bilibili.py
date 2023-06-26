@@ -1,4 +1,5 @@
 import sys
+
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QGroupBox, QVBoxLayout, QHBoxLayout,\
     QRadioButton, QLineEdit, QLabel, QPushButton
 
@@ -22,24 +23,11 @@ class MyWindow(QMainWindow):
         # 设置Widget大小以及固定宽高
         # self.setFixedSize(900, 900)
         self.createMenu()
-        # 最外层的水平布局，包含两部分：存储和进度显示
+        # 最外层的水平布局，包含两部分：存储和下载
         container = QHBoxLayout()
         self.storeContainer(container=container)
+        self.downloadContainer(container=container)
 
-        #尝试创建新的组和布局
-        test_box = QGroupBox()
-        testContainer = QVBoxLayout()
-        testbtn = QPushButton("按钮")
-        # 创建显示的窗口，放在右边
-        showWidget = QWidget()
-        showWidget.resize(300, 300)
-
-        testContainer.addWidget(showWidget)
-        testContainer.addWidget(testbtn)
-        test_box.setLayout(testContainer)
-
-        #将控件添加最外层的布局中
-        container.addWidget(test_box)
         #设置窗口为最外层
         widget = QWidget()
         # 设置窗口显示的内容是最外层容器
@@ -76,6 +64,38 @@ class MyWindow(QMainWindow):
 
         # 最后将所有组添加到最外层的布局中
         container.addWidget(storeBox)
+
+    def downloadContainer(self, container):
+        """创建下载栏"""
+        # 尝试创建新的组和布局
+        download_box = QGroupBox()
+        download_layout = QVBoxLayout()
+
+        # 创建网址输入框
+        download_label = QLabel("BiliBili视频网址：")
+        download_url_edit = QLineEdit()
+        download_url_edit.setPlaceholderText("请输入需要下载的视频网址")
+
+        #创建水平布局器
+        download_btn_layout = QHBoxLayout()
+        # 创建”下载“按键
+        download_btn = QPushButton("下载")
+        download_btn_layout.addStretch(1)  # 伸缩器
+        download_btn_layout.addWidget(download_btn)
+        #创建可以显示下载信息的label
+        showInfo = QLabel("222222")
+        showInfo.resize(300, 300)
+
+        # 将控件添加到布局中
+        download_layout.addWidget(download_label)
+        download_layout.addWidget(download_url_edit)
+        download_layout.addLayout(download_btn_layout)
+        download_layout.addWidget(showInfo)
+        # 将垂直布局添加到download_box中
+        download_box.setLayout(download_layout)
+        # 将控件添加最外层的布局中
+        container.addWidget(download_box)
+
 
 
 if __name__ == '__main__':
